@@ -1,0 +1,1 @@
+digitalocean ansible_host=FILL_HOST_NAME ansible_user=root

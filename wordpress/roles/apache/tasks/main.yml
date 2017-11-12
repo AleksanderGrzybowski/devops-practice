@@ -1,0 +1,19 @@
+- name: Install Apache and PHP
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - apache2
+    - php7.1
+    - php7.1-mysql
+    - libapache2-mod-php7.1
+
+- name: Copy Wordpress site definition file
+  template:
+    src: blog.conf
+    dest: /etc/apache2/sites-available/
+
+- name: Enable Wordpress site in apache
+  command: a2ensite blog.conf
+  notify: restart apache
+

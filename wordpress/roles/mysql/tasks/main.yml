@@ -1,0 +1,23 @@
+- name: Install MySQL
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - mysql-server
+    - python-mysqldb
+
+- name: Add mysql user for Wordpress
+  mysql_user:
+    name: '{{ mysql_username }}'
+    password: '{{ mysql_password }}'
+    state: present
+    priv: '{{ mysql_database }}.*:ALL'
+
+- name: Add Wordpress database
+  mysql_db:
+    login_user: '{{ mysql_username }}'
+    login_password: '{{ mysql_password }}'
+    name: '{{ mysql_database }}'
+    state: present
+    collation: utf8_general_ci
+

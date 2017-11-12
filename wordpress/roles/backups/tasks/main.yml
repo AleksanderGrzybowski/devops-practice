@@ -1,0 +1,19 @@
+- name: Create folder for backups
+  file:
+    path: '{{ backups_directory }}'
+    state: directory
+    owner: www-data
+
+- name: Put backup script for MySQL and Wordpress
+  template:
+    src: backup.sh
+    dest: '{{ backups_directory }}/'
+    owner: www-data
+    mode: '0755'
+
+- name: Set up cron job for backups
+  cron:
+    name: blog-backup
+    user: www-data
+    minute: '*/15'
+    job: '{{ backups_directory }}/backup.sh'

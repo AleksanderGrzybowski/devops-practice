@@ -1,0 +1,12 @@
+- name: Set up firewall rules - allow HTTP and SSH
+  ufw:
+    rule: allow
+    to_port: '{{ item }}'
+  with_items:
+    - 22
+    - 80
+
+- name: Set up firewall rules - disable all other traffic and enable on boot
+  ufw:
+    state: enabled
+    policy: deny

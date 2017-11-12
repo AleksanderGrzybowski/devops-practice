@@ -1,0 +1,26 @@
+- hosts: all
+  gather_facts: False
+  
+  tasks:
+  - name: install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+
+- hosts: digitalocean
+  become: yes
+  become_user: root
+  roles:
+    - mysql
+    - apache
+    - wordpress
+    - backups
+    - ufw
+
+  vars:
+    mysql_username: wp_user
+    mysql_password: wp_password
+    mysql_database: blog
+    virtual_host: blog.kelog.pl
+    wp_url: http://blog.kelog.pl
+    backups_directory: /var/backups
+  
