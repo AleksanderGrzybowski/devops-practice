@@ -1,0 +1,11 @@
+upstream backend {
+  {% for host in groups['nodes'] %}
+    server {{ hostvars[host].ansible_host }}:3000;
+  {% endfor %}
+}
+
+server {
+  location / {
+    proxy_pass http://backend;
+  }
+}

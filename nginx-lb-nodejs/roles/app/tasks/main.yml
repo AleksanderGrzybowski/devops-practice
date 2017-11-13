@@ -1,0 +1,15 @@
+---
+- name: Create app directory
+  file:
+    path: /var/app
+    state: directory
+    
+- name: Copy app files
+  synchronize:
+    src: .
+    dest: /var/app
+
+- name: Build containers and start application
+  shell: docker-compose up -d --build
+  args:
+    chdir: /var/app
