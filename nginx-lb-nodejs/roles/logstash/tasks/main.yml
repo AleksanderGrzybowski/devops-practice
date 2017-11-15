@@ -1,0 +1,22 @@
+---
+- name: Install Java
+  apt:
+    name: openjdk-8-jre
+    state: present
+    
+- name: Install Logstash
+  apt:
+    update_cache: yes
+    name: logstash
+    state: present
+
+- name: Put Logstash pipeline
+  template:
+    src: logstash.conf
+    dest: /etc/logstash/conf.d/logstash.conf
+    
+- name: Enable Logstash service
+  service:
+    name: logstash
+    enabled: true
+    state: restarted

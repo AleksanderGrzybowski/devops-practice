@@ -1,0 +1,13 @@
+---
+- name: Add Elastic repository key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    
+- name: Add Elastic repository
+  copy:
+    src: elastic.list
+    dest: /etc/apt/sources.list.d/elastic.list
+    
+- name: Update apt cache
+  apt:
+    update_cache: yes

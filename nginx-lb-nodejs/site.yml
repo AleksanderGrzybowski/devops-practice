@@ -10,6 +10,8 @@
   become_user: root
   roles:
     - nginx
+    - elastic-repo
+    - logstash
   
 - hosts: nodes
   become: yes
@@ -17,3 +19,5 @@
   roles:
     - docker
     - app
+    - elastic-repo
+    - filebeat

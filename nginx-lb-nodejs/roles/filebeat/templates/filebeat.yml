@@ -1,0 +1,15 @@
+name: {{ ansible_host }}
+
+filebeat.prospectors:
+
+- type: log
+  enabled: true
+  paths:
+    - /var/app/logs/*.log
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+
+output.logstash:
+  hosts: ["{{ hostvars['lb0'].ansible_host }}:5044"]
